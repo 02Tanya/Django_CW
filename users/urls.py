@@ -2,13 +2,20 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path
 
 from users.apps import UsersConfig
-from users.views import (RegisterView, UserDetailView,
-                         UserProfileView, restore_access, verify, UserListView, UserModerationView)
+from users.views import (
+    RegisterView,
+    UserDetailView,
+    UserProfileView,
+    restore_access,
+    verify,
+    UserListView,
+    UserModerationView,
+)
 
 app_name = UsersConfig.name
 
 urlpatterns = [
-
+    path("login/", LoginView.as_view(template_name="users/login.html"), name="login"),
     path("logout/", LogoutView.as_view(), name="logout"),
     path("registration/", RegisterView.as_view(), name="register"),
     path("verify/<str:token>", verify, name="verify"),
@@ -16,7 +23,8 @@ urlpatterns = [
     path("user_detail/", UserDetailView.as_view(), name="user_detail"),
     path("user_update/", UserProfileView.as_view(), name="user_profile"),
     path("user_list/", UserListView.as_view(), name="user_list"),
-    path("user_moderation/<int:pk>/", UserModerationView.as_view(), name="user_moderator"),
-    path("", LoginView.as_view(template_name="users/login.html"), name="login"),
+    path(
+        "user_moderation/<int:pk>/", UserModerationView.as_view(), name="user_moderator"
+    ),
     # path('user_activity/<int:pk>/', blocked_users, name='users_block'),
 ]

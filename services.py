@@ -16,39 +16,43 @@ class StyleFormMixin:
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             if not isinstance(field.widget, forms.CheckboxInput):
-                field.widget.attrs['class'] = 'form-control'
+                field.widget.attrs["class"] = "form-control"
 
 
 def change_status(mailing, time) -> None:
-    if mailing.mailing_status == 'created':
-        mailing.mailing_status = 'started'
-        print('started')
-    elif mailing.mailing_status == 'started' and mailing.stop_datetime_mailing <= time:
-        mailing.mailing_status = 'finished'
-        print('finished')
+    if mailing.mailing_status == "created":
+        mailing.mailing_status = "started"
+        print("started")
+    elif mailing.mailing_status == "started" and mailing.stop_datetime_mailing <= time:
+        mailing.mailing_status = "finished"
+        print("finished")
     mailing.save()
 
 
 def change_start_datetime_mailing(mailing, time):
     if mailing.start_datetime_mailing < time:
-        if mailing.mailing_period == 'every_day':
+        if mailing.mailing_period == "every_day":
             mailing.start_datetime_mailing += timedelta(days=1)
-        elif mailing.mailing_period == 'every_week':
+        elif mailing.mailing_period == "every_week":
             mailing.start_datetime_mailing += timedelta(days=7)
-        elif mailing.mailing_period == 'every_month':
+        elif mailing.mailing_period == "every_month":
             mailing.start_datetime_mailing += timedelta(days=30)
         mailing.save()
 
 
 def my_job():
-    print('my_job работает')
+    print("my_job работает")
     now = datetime.now()
     timenow = timezone.make_aware(now, timezone.get_current_timezone())
     mailings = Mailing.objects.filter(is_active=True)
     if mailings:
         for mailing in mailings:
             change_status(mailing, timenow)
-            if mailing.start_datetime_mailing <= timenow <= mailing.stop_datetime_mailing:
+            if (
+                mailing.start_datetime_mailing
+                <= timenow
+                <= mailing.stop_datetime_mailing
+            ):
                 for client in mailing.clients.all():
                     try:
                         response = send_mail(
@@ -56,14 +60,14 @@ def my_job():
                             message=mailing.message.body,
                             from_email=settings.EMAIL_HOST_USER,
                             recipient_list=[client.email_address],
-                            fail_silently=False
+                            fail_silently=False,
                         )
                         mailing_log = MailAttempt.objects.create(
                             attempt_time=mailing.start_datetime_mailing,
                             attempt_status="Success",
                             server_response=response,
                             mailing=mailing,
-                            client=client
+                            client=client,
                         )
                         mailing_log.save()
                         change_start_datetime_mailing(mailing, timenow)
@@ -74,9 +78,9 @@ def my_job():
                             attempt_status="No_success",
                             server_response=error,
                             mailing=mailing,
-                            client=client
+                            client=client,
                         )
                         mailing_log.save()
                         print("Ошибка")
     else:
-        print('no mailings')
+        print("no mailings")

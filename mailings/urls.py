@@ -5,11 +5,23 @@ from django.views.decorators.cache import cache_page
 
 from mailings.apps import MailingsConfig
 from mailings.models import Mailing
-from mailings.views import (ClientCreateView, ClientDeleteView, ClientListView,
-                        ClientUpdateView, MailAttemptListView,
-                        MailingCreateView, MailingDeleteView,
-                        MailingDetailView, MailingListView, MailingUpdateView,
-                        MainPageView, MessageCreateView, MessageListView, ClientDetailView, toggle_activity_status)
+from mailings.views import (
+    ClientCreateView,
+    ClientDeleteView,
+    ClientListView,
+    ClientUpdateView,
+    MailAttemptListView,
+    MailingCreateView,
+    MailingDeleteView,
+    MailingDetailView,
+    MailingListView,
+    MailingUpdateView,
+    MainPageView,
+    MessageCreateView,
+    MessageListView,
+    ClientDetailView,
+    toggle_activity_status,
+)
 
 
 app_name = MailingsConfig.name
@@ -17,7 +29,9 @@ app_name = MailingsConfig.name
 
 urlpatterns = [
     path("mainpage/", cache_page(60)(MainPageView.as_view()), name="main_page"),
-    path("mailingdetails/<int:pk>/", MailingDetailView.as_view(), name="mailing_details"),
+    path(
+        "mailingdetails/<int:pk>/", MailingDetailView.as_view(), name="mailing_details"
+    ),
     path("mailingcreate/", MailingCreateView.as_view(), name="mailing_create"),
     path("mailingupdate/<int:pk>/", MailingUpdateView.as_view(), name="mailing_update"),
     path("mailingdelete/<int:pk>/", MailingDeleteView.as_view(), name="mailing_delete"),
@@ -29,5 +43,6 @@ urlpatterns = [
     path("clientdetails/<int:pk>/", ClientDetailView.as_view(), name="client_details"),
     path("clientupdate<int:pk>/", ClientUpdateView.as_view(), name="client_update"),
     path("clientdelete/<int:pk>/", ClientDeleteView.as_view(), name="client_delete"),
-    path('mailingactivity/<int:pk>/', toggle_activity_status, name='mailing_activity'),
-    path("", MailingListView.as_view(), name="mailing_list")]
+    path("mailingactivity/<int:pk>/", toggle_activity_status, name="mailing_activity"),
+    path("", MailingListView.as_view(), name="mailing_list"),
+]

@@ -20,7 +20,15 @@ class RecoverForm(StyleFormMixin, forms.ModelForm):
 class UserForm(StyleFormMixin, UserChangeForm):
     class Meta:
         model = User
-        fields = ("email", "password", "first_name", "last_name", "avatar", "phone_number", "country")
+        fields = (
+            "email",
+            "password",
+            "first_name",
+            "last_name",
+            "avatar",
+            "phone_number",
+            "country",
+        )
 
     def __int__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

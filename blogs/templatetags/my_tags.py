@@ -8,4 +8,4 @@ register = template.Library()
 def media_filter1(data):
     if data:
         return f"/media/{data}"
-    return '#'
+    return "#"
