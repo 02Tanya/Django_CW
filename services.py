@@ -55,7 +55,7 @@ def my_job():
                             subject=mailing.message.title,
                             message=mailing.message.body,
                             from_email=settings.EMAIL_HOST_USER,
-                            recipient_list=[client.contact_email],
+                            recipient_list=[client.email_address],
                             fail_silently=False
                         )
                         mailing_log = MailAttempt.objects.create(

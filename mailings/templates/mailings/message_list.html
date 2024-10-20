@@ -6,16 +6,15 @@
             {% for object in object_list %}
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">{{ object.title }}</h4>
+                    <h3 class="my-0 font-weight-normal">{{ object.title }}</h3>
                 </div>
                 <div class="card-body">
-                     <h4 class="my-0 font-weight-normal">{{ object.body }}</h4>
+                     <h5 class="my-0 font-weight-normal">{{ object.body }}</h5>
                   </div>
             </div>
             {% endfor %}
             <a class ="p-2 btn btn-outline-primary" href='{% url "mailings:message_create" %}'>
-            Добавить новое сообщение для рассылки</a>
+            Создать новое сообщение для рассылки</a>
         </div>
-
     </div>
 {% endblock %}

@@ -6,28 +6,28 @@
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
                     <h4 class="my-0 font-weight-normal">
-                        Информация о рассылке: {{ object.name }}</h4>
+                        Название рассылки: {{ object.name }}</h4>
                 </div>
                 <div class="card-body">
                       <table class="table">
                             <tr>
-                                <td>Сообщение: {{ object.message}}</td>
+                                <td>Тема сообщения: {{ object.message}}</td>
                              </tr>
                              <tr>
-                                <td>Автор рассылки: {{ object.owner }}</td>
+                                <td>Владелец рассылки: {{ object.owner }}</td>
                              </tr>
-                                <td> Отправлено с: {{ object.start_datetime_mailing }}</td>
+                                <td> Дата начала рассылки: {{ object.start_datetime_mailing }}</td>
                               <tr>
-                                <td> Отправлено до: {{ object.stop_datetime_mailing }}</td>
+                                <td> Дата завершения рассылки: {{ object.stop_datetime_mailing }}</td>
                               </tr>
                              <tr>
                                 <td>Периодичность отправки: {{ object.mailing_period }}</td>
                              </tr>
                             <tr>
-                                <td>Статус рассылки: {{ object.mailing_status }}</td>
+                                <td>Статус процесса: {{ object.mailing_status }}</td>
                              </tr>
                              <tr>
-                                <td>Получатели рассылки: {{ object.clients.all }} </td>
+                                <td>Адресаты рассылки: {{ object.clients.all }} </td>
                              </tr>
                         </table>
                 </div>
