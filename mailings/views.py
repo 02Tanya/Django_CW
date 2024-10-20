@@ -180,7 +180,7 @@ class MainPageView(TemplateView):
         return context_data
 
 
-@login_required
+# @login_required
 @permission_required("mailing.change_activity")
 def toggle_activity_status(request, pk):
     """Позволяюет активировать и декативировать рассылку"""
